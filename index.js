@@ -4,9 +4,12 @@ const form = $('#form');
 let yearSpan = $('#year');
 
 // DATA ARRAY
-let workDayArray = [];
+let workDayArray = JSON.parse(localStorage.getItem('data'));
+if (workDayArray === null) {
+    workDayArray = [];
+}
 
-// FORM SUBMISSION HANDLER
+// FORM SUBMISSION HANDLER - CREATE
 const formSubmissionHandler = (e) => {
     e.preventDefault();
 
@@ -17,30 +20,60 @@ const formSubmissionHandler = (e) => {
     // CONVERT TIME TO USABLE INT
     let usableTime = parseInt(inputedTime.split(' ')[0]);
 
-    // PUSH TO DATA ARRAY
+    // PUSH TO DATA ARRAY AND SAVE TO LOCAL STORAGE
     let newObj = {task: inputedTask, time: usableTime};
     workDayArray.push(newObj);
+    localStorage.setItem('data', JSON.stringify(workDayArray));
 
     // DISPLAY NEW TASK
-    displayData(workDayArray);
+    displayNewData(inputedTask, usableTime);
 
     // RESET FORM VALUES
     $('#taskInput').val('');
     $('#input-time').val('Time');
 };
 
-// GET DATA AND DISPLAY ON TABLE
-const displayData = (data) => {
-    for (let i=0; i<data.length; i++) {
-        let task = data[i].task;
-        let time = data[i].time;
+const deleteTaskHandler = (e) => {
+    if ($(e.target).is('li')) {
+        let targetText = $(e.target).text();
 
-        let timeUl = $(`#tasks-${time}`);
-        
-        let newTaskLi = $('<li>', { class: 'task p-2' });
-        $(newTaskLi).text(task);
-        $(timeUl).append(newTaskLi);
+        let foundTask = workDayArray.map(e => e.task).indexOf(targetText);
+
+        workDayArray.splice(foundTask, 1);
+
+        console.log(workDayArray);
+
+        localStorage.setItem('data', JSON.stringify(workDayArray));
+
+        location.reload();
     }
 }
 
+// GET DATA AND DISPLAY ON TABLE - READ
+const displayData = (data) => {
+    if (data.length > 0) {
+        for (let i=0; i<data.length; i++) {
+            let task = data[i].task;
+            let time = data[i].time;
+    
+            let timeUl = $(`#tasks-${time}`);
+            
+            let newTaskLi = $('<li>', { class: 'task p-2' });
+            $(newTaskLi).text(task);
+            $(timeUl).append(newTaskLi);
+        };
+    };
+};
+
+const displayNewData = (task, time) => {
+    let timeUl = $(`#tasks-${time}`);
+
+    let newTaskLi = $('<li>', { class: 'task p-2' });
+    $(newTaskLi).text(task);
+    $(timeUl).append(newTaskLi);
+}
+
 $(form).on('submit', formSubmissionHandler);
+$(body).on('click', deleteTaskHandler);
+
+displayData(workDayArray);
