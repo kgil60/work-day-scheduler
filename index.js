@@ -2,6 +2,7 @@
 const body = $('body');
 const form = $('#form');
 let yearSpan = $('#year');
+let currentDateSpan = $('#date');
 
 // DATA ARRAY
 let workDayArray = JSON.parse(localStorage.getItem('data'));
@@ -121,9 +122,21 @@ const updateTask = (e) => {
             localStorage.setItem('data', JSON.stringify(workDayArray));
 
             location.reload();
-        }
-    }
-}
+        };
+    };
+};
+
+const datesFormatter = () => {
+    const date = new Date();
+
+    let day = date.getDate();
+    let month = date.getMonth();
+    let year = date.getFullYear();
+
+    $(currentDateSpan).text(`${month + 1}-${day}-${year}`);
+    $(yearSpan).text(year);
+};
+
 
 $(form).on('submit', formSubmissionHandler);
 $(body).on('click', deleteTaskHandler);
@@ -131,3 +144,4 @@ $(body).on('click', editBtnHandler);
 $(body).on('click', updateTask);
 
 displayData(workDayArray);
+datesFormatter();
