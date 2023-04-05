@@ -8,37 +8,146 @@
   </head>
   <body>
     
-    <div id="main-head">
+    <div id="main-head" class="bg-dark text-white text-center p-4">
         <h1>Work Day Scheduler</h1>
     </div>
 
     <!-- form -->
-    <form id="form" class="row g-3">
-        <div class="col">
-            <input type="text" class="form-control" placeholder="Task" aria-label="Task">
-        </div>
-        <div class="col">
-            <select id="input-time" class="form-select">
-                <option selected>Time</option>
-                <option>8 AM</option>
-                <option>9 AM</option>
-                <option>10 AM</option>
-                <option>11 AM</option>
-                <option>12 PM</option>
-                <option>1 PM</option>
-                <option>2 PM</option>
-                <option>3 PM</option>
-                <option>4 PM</option>
-                <option>5 PM</option>
-                <option>6 PM</option>
-            </select>
-        </div>
-        <div class="col">
-            <button type="submit" class="btn btn-dark">Add to schedule</button>
-        </div>
-    </form>
+    <div class="bg-info-subtle px-3 py-4">
+        <form id="form" class="row g-3">
+            <div class="col-md-3 col-sm-12">
+                <input type="text" class="form-control" placeholder="Task" aria-label="Task">
+            </div>
+            <div class="col-md-3 col-sm-12">
+                <select id="input-time" class="form-select">
+                    <option selected>Time</option>
+                    <option>8 AM</option>
+                    <option>9 AM</option>
+                    <option>10 AM</option>
+                    <option>11 AM</option>
+                    <option>12 PM</option>
+                    <option>1 PM</option>
+                    <option>2 PM</option>
+                    <option>3 PM</option>
+                    <option>4 PM</option>
+                    <option>5 PM</option>
+                    <option>6 PM</option>
+                </select>
+            </div>
+            <div class="col-md-3 col-sm-12">
+                <button type="submit" class="btn btn-dark">Add to schedule</button>
+            </div>
+        </form>
+    </div>
     
-    
+    <!-- main content -->
+    <div id="main-content" class="p-3">
+        <div class="text-center">
+            <h2 class="p-3">Here's what your day looks like...</h2>
+            <h5 class="p-3">Add new tasks with the form above</h5>
+        </div>
+        
+
+        <!-- task table -->
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="col-3" scope="col">Time</th>
+                    <th class="col-9" scope="col">Tasks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table-secondary">
+                    <th class="py-3 px-5" scope="row">8 AM</th>
+                    <td>
+                        <ul id="id=tasks-8am">
+
+                        </ul>
+                    </td>
+                </tr>
+                <tr class="table-light">
+                    <th class="py-3 px-5" scope="row">9 AM</th>
+                    <td>
+                        <ul id="tasks-9">
+                            
+                        </ul>
+                    </td>
+                </tr>
+                <tr class="table-secondary">
+                    <th class="py-3 px-5" scope="row">10 AM</th>
+                    <td>
+                        <ul id="tasks-10">
+                            
+                        </ul>
+                    </td>
+                </tr>
+                <tr class="table-light">
+                    <th class="py-3 px-5" scope="row">11 AM</th>
+                    <td>
+                        <ul id="tasks-11">
+                            
+                        </ul>
+                    </td>
+                </tr>
+                <tr class="table-secondary">
+                    <th class="py-3 px-5" scope="row">12 PM</th>
+                    <td>
+                        <ul id="tasks-12">
+                            
+                        </ul>
+                    </td>
+                </tr>
+                <tr class="table-light">
+                    <th class="py-3 px-5" scope="row">1 PM</th>
+                    <td>
+                        <ul id="tasks-1">
+                            
+                        </ul>
+                    </td>
+                </tr>
+                <tr class="table-secondary">
+                    <th class="py-3 px-5" scope="row">2 PM</th>
+                    <td>
+                        <ul id="tasks-2">
+                            
+                        </ul>
+                    </td>
+                </tr>
+                <tr class="table-light">
+                    <th class="py-3 px-5" scope="row">3 PM</th>
+                    <td>
+                        <ul id="tasks-3">
+                            
+                        </ul>
+                    </td>
+                </tr>
+                <tr class="table-secondary">
+                    <th class="py-3 px-5" scope="row">4 PM</th>
+                    <td>
+                        <ul id="tasks-4">
+                            
+                        </ul>
+                    </td>
+                </tr>
+                <tr class="table-light">
+                    <th class="py-3 px-5" scope="row">5 PM</th>
+                    <td>
+                        <ul id="tasks-5">
+                            
+                        </ul>
+                    </td>
+                </tr>
+                <tr class="table-secondary">
+                    <th class="py-3 px-5" scope="row">6 PM</th>
+                    <td>
+                        <ul id="tasks-6">
+                            
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
   </body>
