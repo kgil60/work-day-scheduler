@@ -35,13 +35,12 @@ const formSubmissionHandler = (e) => {
 
 const deleteTaskHandler = (e) => {
     if ($(e.target).is('li')) {
-        let targetText = $(e.target).text();
+        let targetTextArray = $(e.target).text().split('');
+        let targetText = targetTextArray.slice(0, targetTextArray.length - 4).join('');
 
         let foundTask = workDayArray.map(e => e.task).indexOf(targetText);
 
         workDayArray.splice(foundTask, 1);
-
-        console.log(workDayArray);
 
         localStorage.setItem('data', JSON.stringify(workDayArray));
 
@@ -60,6 +59,11 @@ const displayData = (data) => {
             
             let newTaskLi = $('<li>', { class: 'task p-2' });
             $(newTaskLi).text(task);
+
+            let editBtn = $('<button>', { class: 'btn btn-dark ms-2', id: `edit-${time}`});
+            $(editBtn).text('Edit');
+            $(newTaskLi).append(editBtn)
+
             $(timeUl).append(newTaskLi);
         };
     };
@@ -70,10 +74,60 @@ const displayNewData = (task, time) => {
 
     let newTaskLi = $('<li>', { class: 'task p-2' });
     $(newTaskLi).text(task);
+
+    let editBtn = $('<button>', { class: 'btn btn-dark ms-2', id: `edit-${time}`});
+    $(editBtn).text('Edit');
+    $(newTaskLi).append(editBtn)
+
     $(timeUl).append(newTaskLi);
+};
+
+const editBtnHandler = (e) => {
+    let target = e.target;
+    let parent = $(target).parent();
+
+    if ($(target).is('button')) {
+        if ($(target).attr('id').indexOf('edit') >= 0) {
+            let textArray = parent.text().split('');
+            let taskText = textArray.slice(0, textArray.length - 4).join('');
+            let taskTime = parseInt($(target).attr('id').split('-')[1]);
+
+            let foundTask = workDayArray.map(el => el.task).indexOf(taskText);
+
+            if (foundTask && workDayArray[foundTask].time === taskTime) {
+                workDayArray.splice(foundTask, 1);
+
+                localStorage.setItem('data', JSON.stringify(workDayArray));
+            }
+
+            parent.replaceWith(`<textarea>${taskText}</textarea><button class='btn btn-dark ms-2' id='done'>Done</button>`);
+        };
+    };
+};
+
+const updateTask = (e) => {
+    let target = e.target;
+
+    if ($(target).is('button')) {
+        if($(target).attr('id') === 'done') {
+            let time = parseInt($(target).parent().attr('id').split('-')[1]);
+            let newText = $(target).prev().val();
+
+            $(target).parent().empty();
+
+            let newObj = {task: newText, time: time};
+
+            workDayArray.push(newObj);
+            localStorage.setItem('data', JSON.stringify(workDayArray));
+
+            location.reload();
+        }
+    }
 }
 
 $(form).on('submit', formSubmissionHandler);
 $(body).on('click', deleteTaskHandler);
+$(body).on('click', editBtnHandler);
+$(body).on('click', updateTask);
 
 displayData(workDayArray);
